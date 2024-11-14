@@ -1,4 +1,8 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    Shoot(1)
+})
+function Shoot (num: number) {
+    info.setScore(num)
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -19,10 +23,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         `, mySprite, 50, 50)
     projectile.follow(Zombie, 50000)
     pause(150)
-    if (projectile.vy == 0) {
+    if (projectile.lifespan > 4) {
         sprites.destroy(projectile, effects.spray, 500)
     }
-})
+}
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
 })
