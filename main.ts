@@ -2,7 +2,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Shoot(1)
 })
 function Shoot (num: number) {
-    info.setScore(num)
+    info.setScore(0)
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -29,6 +29,7 @@ function Shoot (num: number) {
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
+    info.changeScoreBy(1)
 })
 let Zombie: Sprite = null
 let projectile: Sprite = null
