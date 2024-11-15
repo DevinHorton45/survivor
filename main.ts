@@ -20,19 +20,16 @@ function Shoot (num: number) {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, mySprite, 50, 50)
-    projectile.follow(Zombie, 50000)
-    pause(150)
-    if (projectile.lifespan > 4) {
-        sprites.destroy(projectile, effects.spray, 500)
-    }
+        `, mySprite, 0, 0)
+    projectile.follow(myEnemy, 100)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(1)
 })
-let Zombie: Sprite = null
+let myEnemy: Sprite = null
 let projectile: Sprite = null
+let myenemy2: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -53,8 +50,9 @@ mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
 info.setScore(0)
-game.onUpdateInterval(500, function () {
-    Zombie = sprites.create(img`
+controller.moveSprite(mySprite)
+for (let index = 0; index < 4; index++) {
+    myenemy2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -71,11 +69,11 @@ game.onUpdateInterval(500, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    Zombie.setPosition(randint(160, 160), randint(0, 120))
-    Zombie.setStayInScreen(true)
+        `, SpriteKind.Food)
+    myenemy2.setPosition(randint(160, 160), randint(0, 120))
+    myenemy2.setStayInScreen(true)
     animation.runImageAnimation(
-    Zombie,
+    myenemy2,
     [img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -131,9 +129,9 @@ game.onUpdateInterval(500, function () {
     500,
     true
     )
-})
+}
 game.onUpdateInterval(500, function () {
-    Zombie = sprites.create(img`
+    myEnemy = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -150,90 +148,11 @@ game.onUpdateInterval(500, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    Zombie.setPosition(randint(0, 160), randint(120, 120))
-    Zombie.setStayInScreen(true)
+        `, SpriteKind.Food)
+    myEnemy.setPosition(randint(160, 160), randint(0, 120))
+    myEnemy.setStayInScreen(true)
     animation.runImageAnimation(
-    Zombie,
-    [img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 7 7 . . . . . 7 7 . . . 
-        . . . . 7 7 7 7 7 7 7 7 7 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 7 7 . . . . . . . . . . 
-        . . . . 7 7 7 7 7 7 7 7 7 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . 7 7 . . . 
-        . . . . 7 7 7 7 7 7 7 7 7 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . 6 6 7 7 7 7 7 6 6 . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `],
-    500,
-    true
-    )
-})
-game.onUpdateInterval(500, function () {
-    Zombie = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . 7 7 . . . . 7 7 . . . . 
-        . . . . 7 7 7 7 7 7 7 7 . . . . 
-        . . . . 6 6 7 7 7 7 6 6 . . . . 
-        . . . . 6 6 7 7 7 7 6 6 . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    Zombie.setPosition(randint(0, 130), randint(0, -160))
-    Zombie.setStayInScreen(true)
-    animation.runImageAnimation(
-    Zombie,
+    myEnemy,
     [img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
